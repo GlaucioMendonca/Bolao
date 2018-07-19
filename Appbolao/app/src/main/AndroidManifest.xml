@@ -22,7 +22,12 @@
         <activity
             android:name=".CadastroActivity"
             android:label="@string/title_activity_cadastro"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CadastroBolao"
+            android:label="@string/title_activity_cadastro_bolao"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ViewBolao"></activity>
     </application>
 
 </manifest>
