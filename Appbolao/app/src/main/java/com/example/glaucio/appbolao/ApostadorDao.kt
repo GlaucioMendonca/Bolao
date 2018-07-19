@@ -33,7 +33,7 @@ class ApostadorDao(var context: Context) {
                 val golstimedecasa = cursor.getInt(cursor.getColumnIndex("golstimedecasa"))
                 val golstimedefora = cursor.getInt(cursor.getColumnIndex("golstimedefora"))
 
-                lista.add(ApostadorModel( id, idBolao,nome,golstimedecasa,golstimedefora))
+                lista.add(ApostadorModel(nome,golstimedecasa,golstimedefora, idBolao, id))
             }while(cursor.moveToNext())
         }
 

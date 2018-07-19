@@ -47,7 +47,7 @@ class BolaoDao(var context: Context)  {
                             val golstimedecasa1 = cursor2.getInt(cursor2.getColumnIndex("golstimedecasa"))
                             val golstimedefora1 = cursor2.getInt(cursor2.getColumnIndex("golstimedefora"))
                             val nome = cursor2.getString(cursor2.getColumnIndex("nome"))
-                            val apostador = ApostadorModel(id,idBolao,nome,golstimedecasa1,golstimedefora1)
+                            val apostador = ApostadorModel(nome,golstimedecasa1,golstimedefora1,idBolao,id)
                             bolao.insertApostador(apostador)
                         }
                     }while (cursor2.moveToNext())
