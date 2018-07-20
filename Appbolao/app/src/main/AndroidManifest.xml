@@ -27,7 +27,7 @@
             android:name=".CadastroBolao"
             android:label="@string/title_activity_cadastro_bolao"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewBolao"></activity>
+        <activity android:name=".ViewBolao" />
     </application>
 
 </manifest>

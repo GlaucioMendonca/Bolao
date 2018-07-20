@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            val it = Intent(this, CadastroActivity::class.java)
+            val it = Intent(this, CadastroBolao::class.java)
             startActivityForResult(it, CADASTRO)
         }
 
@@ -40,10 +40,9 @@ class MainActivity : AppCompatActivity() {
 
     fun adapter (){
         var dados = ArrayList<Bolao>()
-        val data = SimpleDateFormat("dd-MM-yyyy").parse("20-06-2018")
 
-        var b1 = Bolao("Brasil", "Mexico", data, 5.00, null,null)
-        var b2 = Bolao("China", "Africa", data, 5.00, null,null)
+        var b1 = Bolao("Brasil", "Mexico", 5.00, null,null)
+        var b2 = Bolao("China", "Africa",5.00, null,null)
 
         dados.add(b1)
         dados.add(b2)
