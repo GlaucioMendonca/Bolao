@@ -8,10 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
+import android.view.View
+import android.widget.*
 
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
@@ -19,9 +17,9 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     val CADASTRO = 1
-    private lateinit var bolao: Bolao
+    val UPDATE = 3
     private lateinit var lv: ListView
-    private lateinit var apostadordao: ApostadorDao
+    private lateinit var bolaodao: BolaoDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,25 +30,16 @@ class MainActivity : AppCompatActivity() {
             val it = Intent(this, CadastroBolao::class.java)
             startActivityForResult(it, CADASTRO)
         }
-
+        this.bolaodao = BolaoDao(this)
         this.lv = findViewById(R.id.lvMain)
+        this.lv.setOnItemClickListener(OnClick())
         this.adapter()
 
     }
 
     fun adapter (){
-        var dados = ArrayList<Bolao>()
 
-        var b1 = Bolao("Brasil", "Mexico", 5.00, null,null)
-        var b2 = Bolao("China", "Africa",5.00, null,null)
-
-        dados.add(b1)
-        dados.add(b2)
-
-        Log.e("bolao", "entrei no adapter")
-        Log.e("bolao", dados[0].toString())
-
-        this.lv.adapter = ArrayAdapter<Bolao>(this, android.R.layout.simple_list_item_1, dados)
+        this.lv.adapter = ArrayAdapter<Bolao>(this, android.R.layout.simple_list_item_1, bolaodao.select())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -68,13 +57,23 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+    inner class OnClick: AdapterView.OnItemClickListener{
+        override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+            if (p0 != null) {
+                var b = p0.adapter.getItem(p2) as Bolao
+                var it = Intent(this@MainActivity, ViewBolao::class.java)
+                it.putExtra("BOLAO", b.id)
+                startActivityForResult(it, UPDATE)
+            }
+        }
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK){
             if (requestCode == CADASTRO){
-                val pessoa = data?.getSerializableExtra("PESSOA") as ApostadorModel
-                this.apostadordao.insert(pessoa)
+                val bolao = data?.getSerializableExtra("BOLAO") as Bolao
+                this.bolaodao.insert(bolao)
                 this.adapter()
                 //Log.i("APP_PESSOA", this.dao.select().toString())
             }

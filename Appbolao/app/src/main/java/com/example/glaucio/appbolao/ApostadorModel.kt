@@ -4,7 +4,6 @@ import java.io.Serializable
 import java.util.*
 
 class ApostadorModel( var Nome:String,var golsTimeCasa:Int?, var golsTimeFora:Int?, var idBolao: Int = -1, var id: Int = -1): Serializable {
-//    private lateinit var bolao: ArrayList<Bolao>
 
 
     override fun toString(): String {

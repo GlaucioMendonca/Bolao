@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -34,10 +35,10 @@ class CadastroActivity : AppCompatActivity() {
         val nome = this.etNome.text.toString()
         val golstimedecasa = this.btGolsTimeDeCasa.text.toString()
         val golstimedefora = this.btGolsTimeDeFora.text.toString()
-        var IDBolao : Int = intent.getIntExtra("bolaoID", -1)
+        var IDBolao : Int = intent.getIntExtra("BOLAOID",-1)
 
         val pessoa = ApostadorModel(nome,golstimedecasa.toInt(),golstimedefora.toInt(), IDBolao)
-
+        Log.i("APP_PESSOA", pessoa.toString())
         var it = Intent()
         it.putExtra("PESSOA", pessoa)
         setResult(Activity.RESULT_OK, it)

@@ -15,6 +15,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/etTimeCasa"
             android:layout_width="148dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -22,13 +23,14 @@
             android:textSize="28sp" />
 
         <TextView
-            android:layout_width="79dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="X"
             android:textSize="30sp" />
 
         <TextView
+            android:id="@+id/etTimeFora"
             android:layout_width="156dp"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -36,7 +38,6 @@
             android:textSize="28sp" />
 
     </LinearLayout>
-
 
 
     <LinearLayout
@@ -51,6 +52,7 @@
 
 
         <TextView
+            android:id="@+id/etValor"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="20.00"
@@ -64,6 +66,7 @@
         android:orientation="vertical">
 
         <ListView
+            android:id="@+id/lvApostas"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
@@ -107,18 +110,19 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/btCancelarBolao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Voltar"
 
-            />
+            android:text="Voltar" />
+
         <Button
-            android:layout_gravity="right"
+            android:id="@+id/btNovoPalpite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Novo Palpiteiro !"
-            />
+            android:layout_gravity="right"
+            android:text="Novo Palpiteiro !" />
 
 
     </LinearLayout>

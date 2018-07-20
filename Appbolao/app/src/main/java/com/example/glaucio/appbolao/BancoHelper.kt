@@ -18,15 +18,15 @@ class BancoHelper(context: Context?) :
                 "id integer primary key autoincrement, " +
                 "idBolao integer , " +
                 "nome string, " +
-                "golstimedecasa integer " +
+                "golstimedecasa integer, " +
                 "golstimedefora integer " +
                 ")"
         val sql2 = "create table bolao (" +
                 "id integer primary key autoincrement, " +
                 "timedecasa string, " +
                 "timedefora string, " +
-                "valoraposta integer " +
-                "golstimedecasa integer " +
+                "valoraposta real, " +
+                "golstimedecasa integer, " +
                 "golstimedefora integer " +
                 ")"
         db?.execSQL(sql1)
