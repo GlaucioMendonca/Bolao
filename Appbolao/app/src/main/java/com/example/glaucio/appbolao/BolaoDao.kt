@@ -64,4 +64,14 @@ class BolaoDao(var context: Context)  {
     fun delete(b: Bolao){
         this.banco.writableDatabase.delete("bolao", "id = ?", arrayOf(b.id.toString()))
     }
+
+    fun update(bolao: Bolao){
+        val cv = ContentValues()
+        cv.put("timedecasa", bolao.timeCasa)
+        cv.put("timedefora", bolao.timeFora)
+        cv.put("valoraposta", bolao.valorAposta)
+        cv.put("golstimedecasa", bolao.golsTimeCasa)
+        cv.put("golstimedefora", bolao.golsTimeFora)
+        this.banco.writableDatabase.update("bolao", cv, "id = ?", arrayOf(bolao.id.toString()))
+    }
 }

@@ -83,6 +83,7 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/etBolaoGolsCasa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -91,6 +92,7 @@
             android:text="Gols Casa" />
 
         <EditText
+            android:id="@+id/etBolaoGolsFora"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -99,6 +101,7 @@
             android:text="Gols Fora" />
 
         <Button
+            android:id="@+id/btResultado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Resultado"
@@ -123,6 +126,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="Novo Palpiteiro !" />
+
+        <Button
+            android:id="@+id/btVencedor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Vencedor" />
 
 
     </LinearLayout>
