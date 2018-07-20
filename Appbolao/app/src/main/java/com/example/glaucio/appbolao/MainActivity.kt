@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bolao: Bolao
     private lateinit var lv: ListView
     private lateinit var apostadordao: ApostadorDao
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
