@@ -19,9 +19,9 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     val CADASTRO = 1
-    private lateinit var bolao: Bolao
+
     private lateinit var lv: ListView
-    private lateinit var apostadordao: ApostadorDao
+    private lateinit var bolaodao: BolaoDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,25 +32,15 @@ class MainActivity : AppCompatActivity() {
             val it = Intent(this, CadastroBolao::class.java)
             startActivityForResult(it, CADASTRO)
         }
-
+        this.bolaodao = BolaoDao(this)
         this.lv = findViewById(R.id.lvMain)
         this.adapter()
 
     }
 
     fun adapter (){
-        var dados = ArrayList<Bolao>()
 
-        var b1 = Bolao("Brasil", "Mexico", 5.00, null,null)
-        var b2 = Bolao("China", "Africa",5.00, null,null)
-
-        dados.add(b1)
-        dados.add(b2)
-
-        Log.e("bolao", "entrei no adapter")
-        Log.e("bolao", dados[0].toString())
-
-        this.lv.adapter = ArrayAdapter<Bolao>(this, android.R.layout.simple_list_item_1, dados)
+        this.lv.adapter = ArrayAdapter<Bolao>(this, android.R.layout.simple_list_item_1, bolaodao.select())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -73,8 +63,8 @@ class MainActivity : AppCompatActivity() {
 
         if (resultCode == Activity.RESULT_OK){
             if (requestCode == CADASTRO){
-                val pessoa = data?.getSerializableExtra("PESSOA") as ApostadorModel
-                this.apostadordao.insert(pessoa)
+                val bolao = data?.getSerializableExtra("BOLAO") as Bolao
+                this.bolaodao.insert(bolao)
                 this.adapter()
                 //Log.i("APP_PESSOA", this.dao.select().toString())
             }

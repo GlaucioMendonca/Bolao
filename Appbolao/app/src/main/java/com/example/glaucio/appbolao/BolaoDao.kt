@@ -2,6 +2,7 @@ package com.example.glaucio.appbolao
 
 import android.content.ContentValues
 import android.content.Context
+import android.util.Log
 
 class BolaoDao(var context: Context)  {
     private lateinit var banco: BancoHelper
@@ -11,6 +12,7 @@ class BolaoDao(var context: Context)  {
     }
 
     fun insert(bolao: Bolao){
+        Log.e("bolao", "entrei no dao")
         val cv = ContentValues()
         cv.put("timedecasa", bolao.timeCasa)
         cv.put("timedefora", bolao.timeFora)
@@ -36,23 +38,23 @@ class BolaoDao(var context: Context)  {
                 val golstimedefora = cursor1.getString(cursor1.getColumnIndex("golstimedefora"))
                 val bolao = Bolao(timedecasa,timedefora,valoraposta.toDouble(),golstimedecasa.toInt(),golstimedefora.toInt(), id)
 
-                val colunas2 = arrayOf("id","idBolao","golstimedecasa","golstimedefora")
-                val cursor2 = this.banco.readableDatabase.query("apostador", colunas2, null, null, null, null, null)
-                cursor2.moveToFirst()
-
-                if(cursor2.count > 0){
-                    do{
-                        val idBolao = cursor2.getInt(cursor1.getColumnIndex("idBolao"))
-                        if(idBolao == id){
-                            val golstimedecasa1 = cursor2.getInt(cursor2.getColumnIndex("golstimedecasa"))
-                            val golstimedefora1 = cursor2.getInt(cursor2.getColumnIndex("golstimedefora"))
-                            val nome = cursor2.getString(cursor2.getColumnIndex("nome"))
-                            val apostador = ApostadorModel(nome,golstimedecasa1,golstimedefora1,idBolao,id)
-                            bolao.insertApostador(apostador)
-                        }
-                    }while (cursor2.moveToNext())
-
-                }
+//                val colunas2 = arrayOf("id","idBolao","golstimedecasa","golstimedefora")
+//                val cursor2 = this.banco.readableDatabase.query("apostador", colunas2, null, null, null, null, null)
+//                cursor2.moveToFirst()
+//
+//                if(cursor2.count > 0){
+//                    do{
+//                        val idBolao = cursor2.getInt(cursor1.getColumnIndex("idBolao"))
+//                        if(idBolao == id){
+//                            val golstimedecasa1 = cursor2.getInt(cursor2.getColumnIndex("golstimedecasa"))
+//                            val golstimedefora1 = cursor2.getInt(cursor2.getColumnIndex("golstimedefora"))
+//                            val nome = cursor2.getString(cursor2.getColumnIndex("nome"))
+//                            val apostador = ApostadorModel(nome,golstimedecasa1,golstimedefora1,idBolao,id)
+//                            bolao.insertApostador(apostador)
+//                        }
+//                    }while (cursor2.moveToNext())
+//
+//                }
 
                 lista.add(bolao)
             }while(cursor1.moveToNext())
