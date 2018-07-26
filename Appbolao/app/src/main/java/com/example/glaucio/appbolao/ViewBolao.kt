@@ -1,31 +1,41 @@
 package com.example.glaucio.appbolao
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import com.example.glaucio.appbolao.R.layout.activity_resultado
 import kotlinx.android.synthetic.main.activity_cadastro_bolao.*
 import kotlinx.android.synthetic.main.activity_view_bolao.*
 
 class ViewBolao : AppCompatActivity() {
+    private lateinit var tvPlacarCasa : TextView
+    private lateinit var tvPlacarFora : TextView
     private lateinit var ettimecasa : TextView
     private lateinit var ettimefora : TextView
     private lateinit var etvalor : TextView
     private lateinit var apostadordao : ApostadorDao
+    private lateinit var bolaoDao : BolaoDao
     private lateinit var btnovopalpite : Button
-    private lateinit var btvoltarbolao: Button
+    //private lateinit var btvoltarbolao: Button
     private lateinit var lvApostas: ListView
-    private lateinit var etGolsCasa: EditText
-    private lateinit var etGolsFora: EditText
+    //private lateinit var etGolsCasa: EditText
+    //private lateinit var etGolsFora: EditText
     private lateinit var btResultado: Button
     private lateinit var dao: BolaoDao
     private lateinit var btVencedor: Button
 
+    private var notesDialog: AlertDialog? = null
+
     var bolaoMaster:Int = 0
     val CADASTRO = 1
+    val RESULTADO =2
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_bolao)
@@ -39,16 +49,21 @@ class ViewBolao : AppCompatActivity() {
         this.ettimefora = findViewById(R.id.etTimeFora)
         this.etvalor = findViewById(R.id.etValor)
         this.btnovopalpite = findViewById(R.id.btNovoPalpite)
-        this.btvoltarbolao = findViewById(R.id.btCancelarBolao)
-        this.etGolsCasa = findViewById(R.id.etBolaoGolsCasa)
-        this.etGolsFora = findViewById(R.id.etBolaoGolsFora)
+        this.tvPlacarCasa = findViewById(R.id.tvPlacarCasa)
+        this.tvPlacarFora = findViewById(R.id.tvPlacarFora)
+        //this.btvoltarbolao = findViewById(R.id.btCancelarBolao)
+        //this.etGolsCasa = findViewById(R.id.etBolaoGolsCasa)
+        //this.etGolsFora = findViewById(R.id.etBolaoGolsFora)
         this.btResultado = findViewById(R.id.btResultado)
         this.dao = BolaoDao(this)
 
         var bolao1 = dao.select().get(bolaoMaster)
 
-        this.ettimecasa.text = "${bolao1.timeCasa} ${bolao1.golsTimeCasa}"
-        this.ettimefora.text = "${bolao1.golsTimeFora} ${bolao1.timeFora}"
+        this.ettimecasa.text = "${bolao1.timeCasa}"
+        this.tvPlacarCasa.text = "${bolao1.golsTimeCasa}"
+        this.ettimefora.text = "${bolao1.timeFora}"
+        this.tvPlacarFora.text = "${bolao1.golsTimeFora}"
+
         this.etvalor.text = bolao1.valorAposta.toString()
 
 
@@ -58,53 +73,78 @@ class ViewBolao : AppCompatActivity() {
 
         this.adapter()
         this.btnovopalpite.setOnClickListener({addApostador(it)})
-        this.btvoltarbolao.setOnClickListener({finish()})
+        //this.btvoltarbolao.setOnClickListener({finish()})
         this.lvApostas.setOnItemLongClickListener(OnLongClick())
         this.btVencedor.setOnClickListener({ vencedor() })
 
     }
 
     fun vencedor (){
-        var bolao3 : Bolao
-        val shareIntent = Intent()
-        bolao3 = dao.select().get(bolaoMaster)
-        var golcasa : Int
-        var golfora : Int
-        golcasa = bolao3.golsTimeCasa as Int
-        golfora = bolao3.golsTimeFora as Int
-        if(golcasa > golfora){
-            shareIntent.action = Intent.ACTION_SEND
-            shareIntent.putExtra(Intent.EXTRA_TEXT, bolao3.timeCasa)
-            shareIntent.type = "text/plain"
-        }else if(golcasa < golfora){
-            shareIntent.action = Intent.ACTION_SEND
-            shareIntent.putExtra(Intent.EXTRA_TEXT, bolao3.timeFora)
-            shareIntent.type = "text/plain"
-        }else{
-            shareIntent.action = Intent.ACTION_SEND
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Empate")
-            shareIntent.type = "text/plain"
+
+        var apostadores = this.apostadordao.select()
+        val lista = ArrayList<ApostadorModel>()
+        val vencedor = ArrayList<ApostadorModel>()
+
+        for (a in apostadores){
+            if (a.idBolao == bolaoMaster)
+                lista.add(a)
         }
 
+        for (a in lista){
+           if (a.golsTimeCasa == tvPlacarCasa.text.toString().toInt() && a.golsTimeFora == tvPlacarFora.text.toString().toInt())
+               vencedor.add(a)
+        }
 
+        for (a in vencedor){
+            Log.i("APPBOLAO", a.toString())
 
+        }
+        var valor = this.etvalor.text.toString().toDouble()
+        Log.i("APPBOLAO", valor.toString())
+        Log.i("APPBOLAO", lista.size.toString())
+        Log.i("APPBOLAO", vencedor.size.toString())
+
+        valor = valor * lista.size.toDouble() / vencedor.size.toDouble()
+        Log.i("APPBOLAO", valor.toString())
+
+        var texto = "Vencedor(es): "
+
+        for (a in vencedor){
+            texto += "${a.Nome}  "
+        }
+
+        texto += "[ Valor recebido: ${valor.toString()}]"
+        Log.i("APPBOLAO", texto.toString())
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.putExtra(Intent.EXTRA_TEXT, texto)
+        shareIntent.type = "text/plain"
         startActivity(Intent.createChooser(shareIntent,"send to"))
     }
 
     fun addResult() {
-        var dados = ArrayList<ApostadorModel>()
-        var bolao2 : Bolao
-        bolao2 = dao.select().get(bolaoMaster)
-        val iterator = dao.select().iterator()
-        val iteratorAposta = apostadordao.select().iterator()
-        bolao2.golsTimeCasa = this.etGolsCasa.text.toString().toInt()
-        bolao2.golsTimeFora = this.etGolsFora.text.toString().toInt()
-        this.ettimecasa.text = "${bolao2.timeCasa}    ${bolao2.golsTimeCasa}"
-        this.ettimefora.text = "${bolao2.golsTimeFora}     ${bolao2.timeFora}"
-
-        dao.update(bolao2)
+//        var dados = ArrayList<ApostadorModel>()
+//        var bolao2 : Bolao
+//        bolao2 = dao.select().get(bolaoMaster)
+//        val iterator = dao.select().iterator()
+//        val iteratorAposta = apostadordao.select().iterator()
+//        //bolao2.golsTimeCasa = this.etGolsCasa.text.toString().toInt()
+//        //bolao2.golsTimeFora = this.etGolsFora.text.toString().toInt()
+//
+//        this.tvPlacarCasa.text = "${bolao2.golsTimeCasa}"
+//
+//
+//        this.tvPlacarFora.text = "${bolao2.golsTimeFora}"
+//
+//        dao.update(bolao2)
+        Log.i("APPBOLAO", "bt resultado")
+        val it = Intent(this, Resultado::class.java)
+        it.putExtra("BOLAOID",bolaoMaster)
+        startActivityForResult(it, RESULTADO)
 
     }
+
+
 
     fun adapter (){
         var dados = ArrayList<ApostadorModel>()
@@ -134,7 +174,23 @@ class ViewBolao : AppCompatActivity() {
             }
         }
 
+        if (resultCode == Activity.RESULT_OK){
+            if (requestCode == RESULTADO){
+
+                var bolao = dao.select().get(this.bolaoMaster)
+                Log.i("APPBOLAO", "for result")
+
+                this.tvPlacarCasa.text = bolao.golsTimeCasa.toString()
+                this.tvPlacarFora.text = bolao.golsTimeFora.toString()
+
+                this.adapter()
+                Log.i("APP_PESSOA", this.apostadordao.select().toString())
+            }
+        }
+
     }
+
+
 
     inner class OnLongClick : AdapterView.OnItemLongClickListener {
         override fun onItemLongClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long): Boolean {

@@ -2,6 +2,7 @@ package com.example.glaucio.appbolao
 
 import android.content.ContentValues
 import android.content.Context
+import android.util.Log
 
 class BolaoDao(var context: Context)  {
     private lateinit var banco: BancoHelper
@@ -66,6 +67,7 @@ class BolaoDao(var context: Context)  {
     }
 
     fun update(bolao: Bolao){
+        Log.i("APPBOLAO", "update")
         val cv = ContentValues()
         cv.put("timedecasa", bolao.timeCasa)
         cv.put("timedefora", bolao.timeFora)

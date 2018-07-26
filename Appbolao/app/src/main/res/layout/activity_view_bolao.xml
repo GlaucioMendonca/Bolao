@@ -15,54 +15,107 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:layout_weight="1"
             android:id="@+id/etTimeCasa"
-            android:layout_width="148dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="timeCasa"
             android:textSize="28sp" />
 
         <TextView
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/tvPlacarCasa"
+            android:layout_weight="1.6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_weight="1.6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:text="X"
             android:textSize="30sp" />
 
         <TextView
+            android:id="@+id/tvPlacarFora"
+            android:layout_weight="1.6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_weight="1"
             android:id="@+id/etTimeFora"
-            android:layout_width="156dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="timeFora"
             android:textSize="28sp" />
 
     </LinearLayout>
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btNovoPalpite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Add" />
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btVencedor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Vencedor" />
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btResultado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="placar"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:text="Valor: "
             android:textSize="20sp" />
 
 
         <TextView
             android:id="@+id/etValor"
-            android:layout_width="wrap_content"
+            android:layout_width="74dp"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:text="20.00"
             android:textSize="20sp" />
+
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="323dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <ListView
@@ -73,69 +126,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/etBolaoGolsCasa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Gols Casa" />
-
-        <EditText
-            android:id="@+id/etBolaoGolsFora"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Gols Fora" />
-
-        <Button
-            android:id="@+id/btResultado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Resultado"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/btCancelarBolao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-
-            android:text="Voltar" />
-
-        <Button
-            android:id="@+id/btNovoPalpite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="Novo Palpiteiro !" />
-
-        <Button
-            android:id="@+id/btVencedor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="Vencedor" />
-
-
-    </LinearLayout>
-
 
 </LinearLayout>
